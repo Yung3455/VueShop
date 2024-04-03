@@ -2,22 +2,23 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/LoginVue.vue'
 import Home from '../components/HomePage.vue'
-// 导入字体图标
-import '../assets/fonts/iconfont.css'
-// 导入全局样式表
-import '../assets/css/global.css'
-
-import axios from 'axios'
-// 配置请求的根路径
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
-Vue.prototype.$http = axios
+import Welcome from '../components/WelcomePage.vue'
+import Users from '../components/user/UsersPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  { path: '/home', component: Home }
+  {
+    path: '/home',
+    component: Home,
+    redirect: 'welcome',
+    children: [
+      { path: '/welcome', component: Welcome },
+      { path: '/users', component: Users }
+    ]
+  }
 ]
 
 const router = new VueRouter({
